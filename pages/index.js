@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -47,6 +48,10 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+
+          <Link href="/chatbot">
+            <a>Go to Chatbot</a>
+          </Link>
         </div>
       </main>
 
