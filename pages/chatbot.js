@@ -17,14 +17,35 @@ export default function ChatBotPage() {
     const chat_steps = [
         {
             id: "welcome-msg",
-            message: "Hello! Thank you for pointing out the problems existed in my social reasoning, and I'd like to collaborate with you on improving this flawed reasoning!",
-            trigger: "intro-pane-msg"
+            message: "Welcome to the ultimate AI chatbot.",
+            trigger: "welcome-msg2"
         },
         {
-            id: "intro-pane-msg",
-            message: "First of all, let me introduce the function of each component.",
-            trigger: "intro-pane"
+            id: "welcome-msg2",
+            message: "I'd like your help to understand what you find wrong about my reasoning process. Are you ready to begin?",
+            trigger: "help-y-n"
         },
+
+	    {
+		    id: 'help-y-n',
+		    options: 
+		    [
+		      { value: 1, label: 'Yes', trigger: 'intro-pane' },
+		      { value: 2, label: 'No', trigger: 'not-ready' },
+		    ],
+	    },
+		{
+			id: 'not-ready',
+			message: 'OK please select "Proceed" when you are ready.',
+			trigger: "proceed"
+		},
+		{
+			id: "proceed",
+			options:
+			[{value: 1, label: "Proceed", trigger: "intro-pane"}]
+		},
+
+
         {
             id: "intro-pane",
             component: (
@@ -201,21 +222,25 @@ export default function ChatBotPage() {
     ];
 
     return (
-        <div>
-            <Head>
-                <title>Co-reasoning chatBot</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <main>
-                <ChatBot
-                    headerTitle="Collaborative reasoning"
-                    // speechSynthesis={{ enable: true, lang: 'en' }}
-                    steps={chat_steps}
-                    width="auto"
-                />
-            </main>
+        <div class="container">
+           	<div class="toolbar" style={{float: "left", width: "25%", margin: "15px", border: "2px solid blue", height: "50px"}}></div>
+        	<div class="chatbot" style={{float: "right", width: "70%", margin: "15px"}}>
+	            <Head>
+	                <title>Co-Reasoning ChatBot</title>
+	                <link rel="icon" href="/favicon.ico" />
+	            </Head>
+	            <main>
+	                <ChatBot
+	                    headerTitle="Collaboration with AI"
+	                    // speechSynthesis={{ enable: true, lang: 'en' }}
+	                    steps={chat_steps}
+	                    width="auto"
+	                    height="75vh"
+	                />
+	            </main>
+	        </div>
+	        <div class="visualization" style={{float: "left", width: "25%", margin: "15px", border: "2px solid green", height: "75vh"}}></div>
         </div>
-
     );
 }
 
