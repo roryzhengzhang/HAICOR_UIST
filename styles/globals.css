@@ -14,3 +14,18 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.flexbox-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+.Sidebar-wrapper {
+  height: 100vh;
+}

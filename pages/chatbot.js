@@ -1,13 +1,17 @@
 import ChatBot from "react-simple-chatbot"
 import Head from "next/head"
+// import React, {Component} from 'react'
 import AgentAnswer from "./AgentAnswer"
+import Sidebar from "./Sidebar"
+import 'react-pro-sidebar/dist/css/styles.css';
+
 
 var latest_answer_options;
-
-export function prepareOptionList(answers){
+ 
+export function prepareOptionList(answers) {
     var options = []
     answers.array.forEach((element, index) => {
-        options.push({label: element, value: `answer-${index}`, trigger: 'confirm-guess'})
+        options.push({ label: element, value: `answer-${index}`, trigger: 'confirm-guess' })
     });
     latest_answer_options = options;
 }
@@ -107,8 +111,8 @@ export default function ChatBotPage() {
         {
             id: 'human-need-confirm-button',
             options: [
-                {value: 'Let\' start', label: 'yes', trigger: "select-relation"},
-                {value: 'Re-select human need', label: 'no'}
+                { value: 'Let\' start', label: 'yes', trigger: "select-relation" },
+                { value: 'Re-select human need', label: 'no' }
             ],
         },
         {
@@ -119,15 +123,15 @@ export default function ChatBotPage() {
         {
             id: 'relation-type-for-single-step',
             options: [
-                { value: 'A is caused by B', label: 'because', trigger: 'finish-single-step'},
-                { value: 'A causes B', label: 'cause', trigger: 'finish-single-step'},
-                { value: 'A is motivated by B', label: 'is motivated by', trigger: 'finish-single-step'},
-                { value: 'The location of A causes B', label: 'location-cause', trigger: 'finish-single-step'},
-                { value: 'A causes emotion B', label: 'emotion-cause', trigger: 'finish-single-step'},
-                { value: 'Changing location in A causes B', label: 'change-location-cause', trigger: 'finish-single-step'},
-                { value: 'Changing posession in A causes B', label: 'change-possession-cause', trigger: 'finish-single-step'},
-                { value: 'Possessing an item in A causes B', label: 'possession-cause', trigger: 'finish-single-step'},
-                { value: 'No', label: 'no', trigger: 'additional-step-confirmed'},
+                { value: 'A is caused by B', label: 'because', trigger: 'finish-single-step' },
+                { value: 'A causes B', label: 'cause', trigger: 'finish-single-step' },
+                { value: 'A is motivated by B', label: 'is motivated by', trigger: 'finish-single-step' },
+                { value: 'The location of A causes B', label: 'location-cause', trigger: 'finish-single-step' },
+                { value: 'A causes emotion B', label: 'emotion-cause', trigger: 'finish-single-step' },
+                { value: 'Changing location in A causes B', label: 'change-location-cause', trigger: 'finish-single-step' },
+                { value: 'Changing posession in A causes B', label: 'change-possession-cause', trigger: 'finish-single-step' },
+                { value: 'Possessing an item in A causes B', label: 'possession-cause', trigger: 'finish-single-step' },
+                { value: 'No', label: 'no', trigger: 'additional-step-confirmed' },
             ]
         },
         {
@@ -138,8 +142,8 @@ export default function ChatBotPage() {
         {
             id: 'additional-step-confirmed-button',
             options: [
-                {value: 'Yes', label: 'yes', trigger: "ask-relation-type-for-additional-step"},
-                {value: 'No', label: 'no'}
+                { value: 'Yes', label: 'yes', trigger: "ask-relation-type-for-additional-step" },
+                { value: 'No', label: 'no' }
             ],
         },
         {
@@ -155,21 +159,21 @@ export default function ChatBotPage() {
         {
             id: 'relation-type-for-additional-step',
             options: [
-                { label: 'A is caused by B', value: 'because', trigger: 'agent-begin-make-guess'},
-                { label: 'A causes B', value: 'cause', trigger: 'agent-begin-make-guess'},
-                { label: 'A is motivated by B', value: 'is motivated by', trigger: 'agent-begin-make-guess'},
-                { label: 'The location of A causes B', value: 'location-cause', trigger: 'agent-begin-make-guess'},
-                { label: 'A causes emotion B', value: 'emotion-cause', trigger: 'agent-begin-make-guess'},
-                { label: 'Changing location in A causes B', value: 'change-location-cause', trigger: 'agent-begin-make-guess'},
-                { label: 'Changing posession in A causes B', value: 'change-possession-cause', trigger: 'agent-begin-make-guess'},
-                { label: 'Possessing an item in A causes B', value: 'possession-cause', trigger: 'agent-begin-make-guess'},
+                { label: 'A is caused by B', value: 'because', trigger: 'agent-begin-make-guess' },
+                { label: 'A causes B', value: 'cause', trigger: 'agent-begin-make-guess' },
+                { label: 'A is motivated by B', value: 'is motivated by', trigger: 'agent-begin-make-guess' },
+                { label: 'The location of A causes B', value: 'location-cause', trigger: 'agent-begin-make-guess' },
+                { label: 'A causes emotion B', value: 'emotion-cause', trigger: 'agent-begin-make-guess' },
+                { label: 'Changing location in A causes B', value: 'change-location-cause', trigger: 'agent-begin-make-guess' },
+                { label: 'Changing posession in A causes B', value: 'change-possession-cause', trigger: 'agent-begin-make-guess' },
+                { label: 'Possessing an item in A causes B', value: 'possession-cause', trigger: 'agent-begin-make-guess' },
             ]
         },
         {
             id: 'agent-begin-make-guess',
             message: "Thanks! Just a moment. I'm making guess of 'Why Gina wants social contact'?",
             trigger: 'agent-return-answer',
-            metadata: {question: "Gina wants social contact", dimension: "1"}
+            metadata: { question: "Gina wants social contact", dimension: "1" }
         },
         {
             id: 'agent-return-answer',
@@ -180,7 +184,7 @@ export default function ChatBotPage() {
         },
         {
             id: 'user-answer-confirm',
-            message: ({previousValue}) => `you choose the answer: ${previousValue}`,
+            message: ({ previousValue }) => `you choose the answer: ${previousValue}`,
             trigger: 'confirm-guess'
         },
         {
@@ -190,8 +194,8 @@ export default function ChatBotPage() {
         {
             id: 'confirm-guess-choice',
             options: [
-                {label: 'It looks great to me', value: 'yes', trigger: 'move-on-to-next-step'},
-                {label: "I\'d like to adjust it", value: 'yes', trigger: 'move-on-to-next-step'},
+                { label: 'It looks great to me', value: 'yes', trigger: 'move-on-to-next-step' },
+                { label: "I\'d like to adjust it", value: 'yes', trigger: 'move-on-to-next-step' },
             ]
         },
         {
@@ -207,12 +211,16 @@ export default function ChatBotPage() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <ChatBot
-                    headerTitle="Collaborative reasoning"
-                    // speechSynthesis={{ enable: true, lang: 'en' }}
-                    steps={chat_steps}
-                    width="auto"
-                />
+                <div class="flexbox-container app">
+                    <Sidebar/>
+                    <ChatBot
+                        headerTitle="Collaborative reasoning"
+                        // speechSynthesis={{ enable: true, lang: 'en' }}
+                        steps={chat_steps}
+                        width="auto"
+                        height="100vh"
+                    />
+                </div>
             </main>
         </div>
 
