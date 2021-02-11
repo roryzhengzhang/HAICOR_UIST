@@ -30,7 +30,7 @@ export default function ChatBotPage() {
 		    id: 'help-y-n',
 		    options: 
 		    [
-		      { value: 1, label: 'Yes', trigger: 'intro-pane' },
+		      { value: 1, label: 'Yes', trigger: 'prem-intro' },
 		      { value: 2, label: 'No', trigger: 'not-ready' },
 		    ],
 	    },
@@ -42,29 +42,68 @@ export default function ChatBotPage() {
 		{
 			id: "proceed",
 			options:
-			[{value: 1, label: "Proceed", trigger: "intro-pane"}]
+			[{value: 1, label: "Proceed", trigger: "prem-intro"}]
 		},
 
+        {
+            id: "prem-intro",
+            message: "I'll begin by introducing the graph that contains the AI's logic and any changes you have made to it, here on the left.",
+            trigger: "intro-pane"
+        },
 
         {
             id: "intro-pane",
             component: (
                 <div>
-                    <p>The "Current Logic" pane illustrates the status of the overall reasoning at the interaction time.</p>
                     <div>
-                        <img src="/node_display.png" />{" "}
-                    represents the statements (nodes)
-                </div>
-                    <div>
-                        <img src="/edge_display.png" />{" "}
-                    represents the logical relations between the statements (nodes)
-                </div>
+                    	In the visualization window, blocks of this color {" "}
+                        <img src="/node_display.png" /><br/>
+                    	represent statements or claims.<br/><br/>
+                    	For example:<br/>
+                    	<img src="/example_statement.png"/>
+                    </div>
                 </div>
             ),
             asMessage: true,
-            trigger: "intro-tool-msg",
-            delay: 0
+            trigger: "intro-pane-2"
         },
+        {
+            id: "intro-pane-2",
+            component: (
+                <div>
+                    <div>
+                    	Additionally, blocks of this color {" "}
+                        <img src="/edge_display.png" />{" "} <br/>
+                    	represent relationships between claims<br/><br/>
+                    	For example:<br/>
+                    	<img src="/example_edge.png"/>
+                	</div>
+                </div>
+            ),
+            asMessage: true,
+            trigger: "intro-pane-3",
+        },
+        {
+            id: "intro-pane-3",
+            component: (
+                <div>
+                    <div>
+                    	Where the overall structure of the logic, connecting two claims would look like:<br/>
+                    	<img src="/overall_logic.png"/>
+                	</div>
+                </div>
+            ),
+            asMessage: true,
+            trigger: "intstruction-confirm",
+        },
+      	{
+		    id: 'intstruction-confirm',
+		    options: 
+		    [
+		      { value: 1, label: "Proceed", trigger: 'intro-tool-msg' },
+		    ],
+	    },
+
         {
             id: "intro-tool-msg",
             message: "You can also access task-related information via toolbar.",
@@ -220,10 +259,14 @@ export default function ChatBotPage() {
             message: "Thanks a lot! Let’s complete the logic between “Gina wants friendship” and “Gina’s friend brought her a bracelet”"
         }
     ];
-
     return (
         <div class="container">
-           	<div class="toolbar" style={{float: "left", width: "25%", margin: "15px", border: "2px solid blue", height: "50px"}}></div>
+           	<div class="toolbar" style={{float: "left", width: "25%", margin: "15px", height: "100px", "border-radius": "10px", "background-color": '#6E48AA'}}>
+           		<h1 style={{"font-family": "Helvetica", "font-size": "15px", "color": "#fff", margin: "15px"}}>Tools</h1>
+           			<img src="https://icon-library.com/images/562132.png" style={{"max-height": "50%", "max-width": "50%", "object-fit": "contain", "margin-left": "10px"}}/>
+           		<img src="https://image.flaticon.com/icons/png/512/172/172147.png" style={{"max-height": "50%", "max-width": "50%", "object-fit": "contain", "margin-left": "10px"}}/>
+           		<img src="https://cdn0.iconfinder.com/data/icons/miscellaneousness-long-shadow-flat/33/lifebuoy-512.png" style={{"max-height": "50%", "max-width": "50%", "object-fit": "contain", "margin-left": "10px"}}/>
+           	</div>
         	<div class="chatbot" style={{float: "right", width: "70%", margin: "15px"}}>
 	            <Head>
 	                <title>Co-Reasoning ChatBot</title>
@@ -236,10 +279,14 @@ export default function ChatBotPage() {
 	                    steps={chat_steps}
 	                    width="auto"
 	                    height="75vh"
+	                    fontFamily="Helvetica"
 	                />
 	            </main>
 	        </div>
-	        <div class="visualization" style={{float: "left", width: "25%", margin: "15px", border: "2px solid green", height: "75vh"}}></div>
+	        <div class="visualization" style={{float: "left", width: "25%", margin: "15px", height: "75vh", "border-radius": "10px", "background-color": '#6E48AA'}}>
+	        	<h1 style={{"font-family": "Helvetica", "font-size": "15px", "color": "#fff", margin: "15px"}}>Current Story: Reasoning Visualization</h1>
+	        	<img src="https://img-9gag-fun.9cache.com/photo/aB3Ejjz_700bwp.webp" style={{"max-height": "75%", "max-width": "90%", "object-fit": "contain", "display": "block", "margin": "auto", "margin-top": "75px", "border-radius": "10px"}} />
+	        </div>
         </div>
     );
 }
