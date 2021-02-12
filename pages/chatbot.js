@@ -1,6 +1,10 @@
 import ChatBot from "react-simple-chatbot"
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader} from 'react-pro-sidebar';
+import 'react-pro-sidebar/dist/css/styles.css';
 import Head from "next/head"
 import AgentAnswer from "./AgentAnswer"
+import { BsBook, BsQuestionCircle, BsGearWideConnected } from "react-icons/bs";
+
 
 var latest_answer_options;
 
@@ -13,7 +17,6 @@ export function prepareOptionList(answers){
 }
 
 export default function ChatBotPage() {
-
     const chat_steps = [
         {
             id: "welcome-msg",
@@ -106,7 +109,7 @@ export default function ChatBotPage() {
 
         {
             id: "intro-tool-msg",
-            message: "You can also access task-related information via toolbar.",
+            message: "You can also access task-related information via the toolbar.",
             trigger: "intro-tool"
         },
         {
@@ -259,15 +262,32 @@ export default function ChatBotPage() {
             message: "Thanks a lot! Let’s complete the logic between “Gina wants friendship” and “Gina’s friend brought her a bracelet”"
         }
     ];
+
     return (
         <div class="container">
-           	<div class="toolbar" style={{float: "left", width: "25%", margin: "15px", height: "100px", "border-radius": "10px", "background-color": '#6E48AA'}}>
-           		<h1 style={{"font-family": "Helvetica", "font-size": "15px", "color": "#fff", margin: "15px"}}>Tools</h1>
-           			<img src="https://icon-library.com/images/562132.png" style={{"max-height": "50%", "max-width": "50%", "object-fit": "contain", "margin-left": "10px"}}/>
-           		<img src="https://image.flaticon.com/icons/png/512/172/172147.png" style={{"max-height": "50%", "max-width": "50%", "object-fit": "contain", "margin-left": "10px"}}/>
-           		<img src="https://cdn0.iconfinder.com/data/icons/miscellaneousness-long-shadow-flat/33/lifebuoy-512.png" style={{"max-height": "50%", "max-width": "50%", "object-fit": "contain", "margin-left": "10px"}}/>
-           	</div>
-        	<div class="chatbot" style={{float: "right", width: "70%", margin: "15px"}}>
+	        <ProSidebar collapsed="collapsed" style={{height: "100vh", display: "inline-block"}}>
+	      	<SidebarHeader>
+		        <div	
+		          style={{
+		            padding: '24px',
+		            textTransform: 'uppercase',
+		            fontWeight: 'bold',
+		            fontSize: 14,
+		            letterSpacing: '1px',
+		            overflow: 'hidden',
+		            textOverflow: 'ellipsis',
+		            whiteSpace: 'nowrap',
+		          }}>	
+		        <BsGearWideConnected iconShape="cicrle" />
+	        	</div>
+      		</SidebarHeader>
+			  <Menu>
+			    <MenuItem class="story" iconShape="cicrle" icon={<BsBook />}></MenuItem>
+			    <MenuItem class="story" iconShape="cicrle" icon={<BsQuestionCircle />}></MenuItem>
+			  </Menu>
+			</ProSidebar>
+
+        	<div class="chatbot" style={{float: "right", width: "95%", margin: "5px", height: "100vh", display: "inline-block"}}>
 	            <Head>
 	                <title>Co-Reasoning ChatBot</title>
 	                <link rel="icon" href="/favicon.ico" />
@@ -282,10 +302,6 @@ export default function ChatBotPage() {
 	                    fontFamily="Helvetica"
 	                />
 	            </main>
-	        </div>
-	        <div class="visualization" style={{float: "left", width: "25%", margin: "15px", height: "75vh", "border-radius": "10px", "background-color": '#6E48AA'}}>
-	        	<h1 style={{"font-family": "Helvetica", "font-size": "15px", "color": "#fff", margin: "15px"}}>Current Story: Reasoning Visualization</h1>
-	        	<img src="https://img-9gag-fun.9cache.com/photo/aB3Ejjz_700bwp.webp" style={{"max-height": "75%", "max-width": "90%", "object-fit": "contain", "display": "block", "margin": "auto", "margin-top": "75px", "border-radius": "10px"}} />
 	        </div>
         </div>
     );
