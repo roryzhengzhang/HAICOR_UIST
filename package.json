@@ -8,12 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "bootstrap": "^4.6.0",
+    "navigation-bar": "0.0.7",
     "next": "^10.0.5",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-pro-sidebar": "^0.6.0",
     "react-simple-chatbot": "^0.6.1",
+    "reactstrap": "^8.9.0",
     "styled-components": "^5.2.1"
   }
 }
