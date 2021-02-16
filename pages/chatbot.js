@@ -124,7 +124,7 @@ export default function ChatBotPage() {
 	    },
         {
             id: "intro-tool-msg",
-            message: reasoning
+            message: "hello"
         },
     ];
 
