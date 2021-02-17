@@ -17,7 +17,7 @@ var reasoning = [
 				{type: "edge", load: "motivates"},
 				{type: "node", load: "Gina pretends to be grateful"}
 				];
-console.log(reasoning[0].type);
+var iteration = 1;				
 
 export function prepareOptionList(answers){
     var options = []
@@ -28,7 +28,22 @@ export function prepareOptionList(answers){
 }
 
 export default function ChatBotPage() {
+	function trigger_helper(props){
+		props.triggerNext({trigger: 'welcome-msg'});
+	}
+	function App() {
+	    //if there are > 0 reasonings left, trigger next event as repeating this function
+	    if (iteration >= 1) {
+	    		return <trigger_helper />;
+	    	}
+	    //otherwise trigger next event as next step in dialogue
+	}
+
     const chat_steps = [
+        {
+            id: "welcome",
+            component: <App />
+        },
         {
             id: "welcome-msg",
             message: "Welcome to the ultimate AI chatbot.",
@@ -130,26 +145,26 @@ export default function ChatBotPage() {
 
     return (
         <div class="container" style={{width: "100%", margin: "0", padding: "0"}}>
-		<Navbar bg="light" style={{width: "100%", "white-space": "no-wrap" }}expand="lg">
-		  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-		  <Navbar.Collapse id="basic-navbar-nav">
-		    <Nav className="mr-auto">
-		      <Nav.Link href="#home">Home</Nav.Link>
-		      <Nav.Link href="#link">Link</Nav.Link>
-		      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-		        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-		        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-		        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-		        <NavDropdown.Divider />
-		        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-		      </NavDropdown>
-		    </Nav>
-		    <Form inline>
-		      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-		      <Button variant="outline-success">Search</Button>
-		    </Form>
-		  </Navbar.Collapse>
-		</Navbar>
+			<Navbar bg="light" style={{width: "100%", "white-space": "no-wrap" }}expand="lg">
+			  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+			  <Navbar.Collapse id="basic-navbar-nav">
+			    <Nav className="mr-auto">
+			      <Nav.Link href="#home">Home</Nav.Link>
+			      <Nav.Link href="#link">Link</Nav.Link>
+			      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+			        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+			        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+			        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+			        <NavDropdown.Divider />
+			        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+			      </NavDropdown>
+			    </Nav>
+			    <Form inline>
+			      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+			      <Button variant="outline-success">Search</Button>
+			    </Form>
+			  </Navbar.Collapse>
+			</Navbar>
 
 			<div style={{display: "flex", "justify-content": "space-between"}}>
 		        <ProSidebar collapsed="collapsed" style={{height: "100vh", display: "inline-block", float: "left"}}>
