@@ -30,58 +30,24 @@ export function prepareOptionList(answers){
 export default function ChatBotPage() {
 	const Button = props => (
 		<>
-			<h1>{reasoning[iteration].load}</h1><br/>
-	      <button onClick={() => props.triggerNextStep({trigger: 'welcome-msg'})}>
+			<h1>{reasoning[iteration].load}</h1>
+	      <button onClick={() => props.triggerNextStep({trigger: 'cont-human-need'})}>
 	        This makes sense. 
 	      </button>
-	      <button onClick={() => props.triggerNextStep({trigger: 'welcome-msg'})}>
+	      <button onClick={() => props.triggerNextStep({trigger: 'welcome-msg2'})}>
 	        No, this is wrong.
 	      </button>
 	    </>
 );
 
     const chat_steps = [
-        {
-            id: "welcome",
-            component: <Button />,
-        },
-        {
-            id: "welcome-msg",
-            message: "Welcome to the ultimate AI chatbot.",
-            trigger: "welcome-msg2"
-        },
-        {
-            id: "welcome-msg2",
-            message: "I'd like your help to understand what you find wrong about my reasoning process. Are you ready to begin?",
-            trigger: "help-y-n"
-        },
-
-	    {
-		    id: 'help-y-n',
-		    options: 
-		    [
-		      { value: 1, label: 'Yes', trigger: 'prem-intro' },
-		      { value: 2, label: 'No', trigger: 'not-ready' },
-		    ],
-	    },
-		{
-			id: 'not-ready',
-			message: 'OK please select "Proceed" when you are ready.',
-			trigger: "proceed"
-		},
-		{
-			id: "proceed",
-			options:
-			[{value: 1, label: "Proceed", trigger: "prem-intro"}]
-		},
-
-        {
-            id: "prem-intro",
-            message: "I'll begin by introducing the graph that contains the AI's logic and any changes you have made to it, here on the left.",
+    	/*tutorial / intro***************************************************/
+    	{
+            id: "tut-intro",
+            message: "Hello, I am an AI chatbot named 'Zheng-bot 3000'. I will begin by teaching you some of the basics.",
             trigger: "intro-pane"
         },
-
-        {
+    	{
             id: "intro-pane",
             component: (
                 <div>
@@ -135,13 +101,66 @@ export default function ChatBotPage() {
 		    id: 'intstruction-confirm',
 		    options: 
 		    [
-		      { value: 1, label: "Proceed", trigger: 'intro-tool-msg' },
+		      { value: 1, label: "Proceed", trigger: 'welcome-msg' },
 		    ],
 	    },
+		/****************************************************/
+
+
         {
-            id: "intro-tool-msg",
-            message: "hello"
+            id: "welcome-msg",
+            message: "Let's get started analyzing the story. First, your opinion on the human need selection?",
+            trigger: "welcome"
         },
+        {
+            id: "welcome",
+            component: <Button />
+        },
+
+        /*path if user does not accept human need***************************************************/
+        {
+            id: "welcome-msg2",
+            message: "I'd like your help to understand what you find wrong about my reasoning process. Please first select a human need that you find appropriate.",
+            trigger: "proceed-human-need"
+        },
+		{
+			id: "proceed-human-need",
+            options: [
+                { value: 'Food', label: 'Food', trigger: "confirm-new-human-need" },
+                { value: 'Social contact', label: 'Social contact', trigger: "confirm-new-human-need" },
+                { value: 'Health', label: 'Health', trigger: "confirm-new-human-need" },
+                { value: 'Savings', label: 'Savings', trigger: "confirm-new-human-need" },
+                { value: 'Approval', label: 'Approval', trigger: "confirm-new-human-need" },
+                { value: 'Order', label: 'Order', trigger: "confirm-new-human-need" },
+                { value: 'Safety', label: 'Safety', trigger: "confirm-new-human-need" },
+                { value: 'Romance', label: 'Romance', trigger: "confirm-new-human-need" },
+                { value: 'Belonging', label: 'Belonging', trigger: "confirm-new-human-need" },
+                { value: 'Power', label: 'Power', trigger: "confirm-new-human-need" },
+                { value: 'Safety', label: 'Safety', trigger: "confirm-new-human-need" },
+                { value: 'Family', label: 'Family', trigger: "confirm-new-human-need" },
+                { value: 'Competition', label: 'Competition', trigger: "confirm-new-human-need" },
+                { value: 'Honor', label: 'Honor', trigger: "confirm-new-human-need" },
+                { value: 'Status', label: 'Status', trigger: "confirm-new-human-need" },
+                { value: 'Curiosity', label: 'Curiosity', trigger: "confirm-new-human-need" },
+                { value: 'Serenity', label: 'Serenity', trigger: "confirm-new-human-need" },
+                { value: 'Idealism', label: 'Idealism', trigger: "confirm-new-human-need" },
+                { value: 'Independence', label: 'Independence', trigger: "confirm-new-human-need" },
+            ]
+		},
+		/****************************************************/
+
+      	{
+		    id: 'confirm-new-human-need',
+		    message: "Are you sure the appropriate human need is {previousValue}?",
+		    trigger: "cont-human-need"
+	    },
+	    {
+            id: "cont-human-need",
+		    options: 
+		    [
+		      { value: 1, label: "Proceed"}
+		    ]
+        }
     ];
 
     return (
@@ -151,13 +170,12 @@ export default function ChatBotPage() {
 			  <Navbar.Collapse id="basic-navbar-nav">
 			    <Nav className="mr-auto">
 			      <Nav.Link href="#home">Home</Nav.Link>
-			      <Nav.Link href="#link">Link</Nav.Link>
-			      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-			        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-			        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-			        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+			      <Nav.Link href="#link">View Stories</Nav.Link>
+			      <NavDropdown title="Options" id="basic-nav-dropdown">
+			        <NavDropdown.Item href="#action/3.2">View Task Summary</NavDropdown.Item>
+			        <NavDropdown.Item href="#action/3.3">View Human Needs</NavDropdown.Item>
 			        <NavDropdown.Divider />
-			        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+			        <NavDropdown.Item href="#action/3.4">Help</NavDropdown.Item>
 			      </NavDropdown>
 			    </Nav>
 			    <Form inline>
