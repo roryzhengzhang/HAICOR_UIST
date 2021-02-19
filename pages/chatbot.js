@@ -6,6 +6,7 @@ import AgentAnswer from "./AgentAnswer";
 import { BsBook, BsQuestionCircle, BsGearWideConnected } from "react-icons/bs";
 import { Navbar, NavItem, NavDropdown, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
+import Visualize from "./components/visualize/visualize";
 
 var latest_answer_options;
 var reasoning = [
@@ -285,7 +286,9 @@ export default function ChatBotPage() {
 			            </main>
 			        </div>
 			    </div>
-		        <div class="visualization" style={{float: "right", "borderStyle": "solid", width: "20%", height: "92vh"}}>Visual</div>
+		        <div class="visualization" style={{float: "right", "borderStyle": "solid", width: "20%", height: "92vh"}}>
+              <Visualize reasoning={reasoning} />
+            </div>
 		    </div>
         </>
     );
