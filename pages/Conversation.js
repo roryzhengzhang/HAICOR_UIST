@@ -22,6 +22,22 @@ class Conversation extends Component {
     //   this.triggerNext = this.triggerNext.bind(this);
   }
 
+  //triplet premise: [evidence, focus]
+  info = [
+      [
+        "Gratitude is like thankful. SomeoneA did somethingA for someoneB for approval of someoneA. SomeoneB is thankful.",
+        "placeholder of focus in story for this evidence"
+      ],
+      [
+        "SomeoneA wants somethingA. SomeoneB giving someoneA somethingA causes someoneA to have gratitude for someoneB.",
+        "placeholder of focus in story for this evidence"
+      ],
+      [
+        "SomeoneA wants to lie to someoneB. To lie causes pretend. Someone A pretends to be someonethingA to lie to someoneB.",
+        "placeholder of focus in story for this evidence"
+      ]
+  ];
+
   node = [
     { load: "Gina wants approval" },
     { load: "Gina feels gratitude" },
@@ -44,7 +60,7 @@ class Conversation extends Component {
       });
     });
     latest_answer_options = options;
-  }
+  };
 
   triggerNext(props) {
     // this.setState({ trigger: true,
@@ -58,12 +74,10 @@ class Conversation extends Component {
     props.triggerNextStep({ trigger: "accept-logic" });
     this.nodeStep++;
     this.edgeStep++;
-  }
+  };
 
   ButtonHumanNeed = (props) => (
     <>
-      {/* <h1>{reasoning[0].load}</h1> */}
-      <h1>{this.node[0].load}</h1>
       <button
         onClick={() => {
           props.triggerNextStep({ trigger: "last-of-human" });
@@ -86,26 +100,22 @@ class Conversation extends Component {
   ButtonReasoningLogic = React.memo(
     (props) => (
       <>
-        {/* <p>{this.node[0].load}</p> 
-		// 	<p>{this.edge[0].load}</p> 
-		// 	<p>{this.node[1].load}</p>  */}
-
         {console.log(props)}
-
-        <p>
-          {this.nodeStep < this.node.length
-            ? this.node[this.nodeStep].load
-            : null}{" "}
-          <br />
-          {this.edgeStep < this.edge.length
-            ? this.edge[this.edgeStep].load
-            : null}
-          <br />
-          {this.nodeStep < this.node.length
-            ? this.node[this.nodeStep + 1].load
-            : null}
-        </p>
-
+        <div style={{textAlign: "center"}}>
+          <p>
+            {this.nodeStep < this.node.length
+              ? this.node[this.nodeStep].load
+              : null}{" "}
+            <br />
+            {this.edgeStep < this.edge.length
+              ? this.edge[this.edgeStep].load
+              : null}
+            <br />
+            {this.nodeStep < this.node.length
+              ? this.node[this.nodeStep + 1].load
+              : null}
+          </p>
+        </div>
         {/* <button onClick={() => {props.triggerNextStep({trigger: 'accept-logic'}); this.nodeStep +=1; this.edgeStep +=1;}}> */}
         {/* <button onClick={() => {this.setState({ trigger: true }, () => {
 		  props.triggerNextStep({trigger: 'accept-logic'});
@@ -120,7 +130,7 @@ class Conversation extends Component {
         </button>
         <button
           onClick={() => {
-            props.triggerNextStep({ trigger: "why1" });
+            props.triggerNextStep({ trigger: "explain-rationale" });
           }}
         >
           No, this is wrong.
@@ -130,6 +140,7 @@ class Conversation extends Component {
     this.areEqual
   );
 
+//start chatbot functionality
   render() {
     return (
       <ChatBot
@@ -215,12 +226,26 @@ class Conversation extends Component {
             id: "welcome-msg",
             message:
               "Let's get started analyzing the story. First, your opinion on the human need selection?",
-            trigger: "welcome",
+            trigger: "welcome0",
           },
           {
+            id: "welcome0",
+            component:              
+              <>
+                <div>
+                  <div style={{margin: "20px", display: "block", textAlign: "center"}}>
+                    <p>{this.node[0].load}</p>
+                  </div>
+                  <br /><br />
+                </div>
+              </>,
+            asMessage: true,
+            trigger: "welcome"
+          },  
+          {
             id: "welcome",
-            // component: <ButtonHumanNeed />
-            component: <this.ButtonHumanNeed />,
+            component: (<this.ButtonHumanNeed />),
+            asMessage: true
           },
 
           /****************************************************/
@@ -360,8 +385,26 @@ class Conversation extends Component {
           },
           {
             id: "rational-step",
-            // component: <ButtonReasoningLogic />
             component: <this.ButtonReasoningLogic />,
+            asMessage: true
+          },
+          {
+            id: "explain-rationale",
+            component:
+              <div>
+                <p>Here is the explanation for my reasoning:</p>
+                <div style={{border: "solid", margin: "20px", display: "block", textAlign: "center"}}>
+                  {this.info[this.nodeStep][0]}
+                  <br /><br />
+                </div>
+                <p>Here is the part of the story I focused on when making my reasoning:</p>
+                <div style={{border: "solid", margin: "20px", display: "block", textAlign: "center"}}>
+                  {this.info[this.nodeStep][1]}
+                </div>
+                <br /><br />
+              </div>,
+            asMessage: true,
+            trigger: "what-wrong"
           },
 
           //reasoning IS rational
@@ -372,13 +415,6 @@ class Conversation extends Component {
             trigger: "acceptable-step",
           },
 
-          //reasoning is NOT rational
-          {
-            id: "why1",
-            message:
-              "Sample reasoning, and sample focus values on original story.",
-            trigger: "what-wrong",
-          },
           {
             id: "what-wrong",
             options: [
