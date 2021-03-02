@@ -201,7 +201,7 @@ class chatbot extends Component {
                     View Question
                   </MenuItem>
                 }
-                position="right center"
+                position="bottom center"
               >
                 <div>
                   What human need drives Gina to pretend to be grateful?
@@ -219,7 +219,7 @@ class chatbot extends Component {
               <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-              <Conversation />
+             	<Conversation />
             </main>
           </div>
           <div

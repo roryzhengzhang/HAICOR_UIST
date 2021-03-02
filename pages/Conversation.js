@@ -26,7 +26,9 @@ class Conversation extends Component {
   info = [
       [
         "Gratitude is like thankful. SomeoneA did somethingA for someoneB for approval of someoneA. SomeoneB is thankful.",
-        "placeholder of focus in story for this evidence"
+        <div>
+              Everyone got a bracelet except Gina. The next day <u>her friend May brought one for Gina</u>. It was clearly made with the leftover threads. It was ugly orange and green, but Gina pretended to be <u>grateful</u>.
+        </div>
       ],
       [
         "SomeoneA wants somethingA. SomeoneB giving someoneA somethingA causes someoneA to have gratitude for someoneB.",
@@ -153,8 +155,20 @@ class Conversation extends Component {
           {
             id: "tut-intro",
             message:
-              "Hello, I am an AI chatbot named 'Zheng-bot 3000'. I will begin by teaching you some of the basics.",
-            trigger: "intro-pane",
+              "Hello, I am an AI chatbot named 'Zheng-bot 3000'. I will begin by displaying the story then explaining your task.",
+            trigger: "show-story",
+          },
+          {
+            id: "show-story",
+            component: (
+                <div style={{"textAlign": "center"}}>
+                  Everyone got a bracelet except Gina. The next day her friend
+                  May brought one for Gina. It was clearly made with the
+                  leftover threads. It was ugly orange and green, but Gina
+                  pretended to be grateful.
+                </div>
+                ),
+            trigger: "intro-pane"
           },
           {
             id: "intro-pane",
@@ -225,7 +239,7 @@ class Conversation extends Component {
           {
             id: "welcome-msg",
             message:
-              "Let's get started analyzing the story. First, your opinion on the human need selection?",
+              "Let's get started analyzing the story. First, your opinion on my human need selection. Is the following true?",
             trigger: "welcome0",
           },
           {
@@ -397,6 +411,7 @@ class Conversation extends Component {
                   {this.info[this.nodeStep][0]}
                   <br /><br />
                 </div>
+                <hr style={{"background-color": "white"}}/>
                 <p>Here is the part of the story I focused on when making my reasoning:</p>
                 <div style={{border: "solid", margin: "20px", display: "block", textAlign: "center"}}>
                   {this.info[this.nodeStep][1]}
@@ -418,25 +433,42 @@ class Conversation extends Component {
           {
             id: "what-wrong",
             options: [
-              { value: "0", label: "Incorrect Focus", trigger: "ask-focus" },
+              { value: "0", label: "Incorrect Focus on Story Content", trigger: "ask-focus" },
               {
                 value: "1",
-                label: "Incorrect Word Sense",
+                label: "Incorrect Word Meanings in AI Reasoning",
                 trigger: "ask-sense",
               },
-              { value: "2", label: "Incorrect Knowledge", trigger: "ask-know" },
+              { value: "2", label: "AI May Be Missing Knowledge Key to This Reasoning", trigger: "ask-know" },
             ],
           },
           {
             id: "ask-focus",
             message:
-              "It seems my original reasoning was incorrect because what I thought was important in the original story was incorrect. I believe I may have focused on the wrong information. Please select from the story the most important content.",
+              "It seems my original reasoning was incorrect because I may have focused on the wrong information from the story. I will present the story again.",
+            trigger: "show-story2",
+          },
+          {
+            id: "show-story2",
+            component: (
+                <div style={{"textAlign": "center"}}>
+                  Everyone got a bracelet except Gina. The next day her friend
+                  May brought one for Gina. It was clearly made with the
+                  leftover threads. It was ugly orange and green, but Gina
+                  pretended to be grateful.
+                </div>
+                ),
+            trigger: "provide-focus-prompt"
+          },
+          {
+            id: "provide-focus-prompt",
+            message: "Below please enter the most important parts of the story separated by semicolons ';'",
             trigger: "provide-focus",
           },
           {
             id: "provide-focus",
-            message: "example of user selecting correct focus on story",
-            trigger: "re-organize-confirm",
+            user: true,
+            trigger: "re-organize-confirm"
           },
 
           {
