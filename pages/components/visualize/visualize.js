@@ -8,6 +8,7 @@ class Visualize extends React.Component {
     const { reasoning } = this.props;
 
     return reasoning.map(({ type, load }) => {
+      console.log("THIS IS A TEST");
       switch (type) {
         case "node":
           return <Node load={load} />;
